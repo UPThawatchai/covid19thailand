@@ -19,84 +19,6 @@
         </card>
       </div>
     </div>
-    <!-- <div class="col-lg-6 col-md-6">
-      <div class="card card-stats">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-5">
-              <div class="info-icon text-center icon-info">
-                <i style="font-size: 2.0625rem" class="tim-icons icon-credit-card"></i>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="numbers">
-                <p class="card-category">รายชื่อประเทศที่ติดเชื้อ</p>
-              </div>
-            </div>
-          </div>
-          <card style="margin-bottom:unset;height: 105px;" type="tasks">
-            <div class="table-full-width table-responsive">
-              <div class="countries-list">
-                <tr v-for="row in countries" :key="row.index">
-                  <td>
-                    <p style="font-size:1.0625rem" class="text-muted">{{ row.TotalConfirmed }}</p>
-                  </td>
-                  <td class="text-left">
-                    <p style="font-size:1.0625rem" class="card-title">{{ row.Country }}</p>
-                  </td>
-                </tr>
-              </div>
-            </div>
-          </card>
-        </div>
-        <div class="card-footer">
-          <hr />
-          <div class="stats">
-            <div>เวลาโลก : {{ allDate }}</div>
-          </div>
-        </div>
-      </div>
-    </div>-->
-    <!-- <div class="col-lg-3 col-md-6">
-      <div class="card card-stats">
-        <div class="card-body">
-          <div class="row" style="margin-bottom: 13px;">
-            <div class="col-5">
-              <div class="info-icon text-center icon-info">
-                <i style="font-size: 2.0625rem" class="tim-icons icon-trophy"></i>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="numbers">
-                <p class="card-category">อับดับติดเชื้อไวรัสสูงที่สุด</p>
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin: 10px;">
-            <div class="col-7">
-              <h4 class="card-title">{{ winName2 }}</h4>
-            </div>
-            <div class="col-5">
-              <h4 class="card-title">{{ winConfirmed2 }}</h4>
-            </div>
-          </div>
-          <div class="row" style="margin: 10px;">
-            <div class="col-7">
-              <h4 class="card-title">{{ winName1 }}</h4>
-            </div>
-            <div class="col-5">
-              <h4 class="card-title">{{ winConfirmed1 }}</h4>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <hr />
-          <div class="stats">
-            <div>เวลาโลก : {{ allDate }}</div>
-          </div>
-        </div>
-      </div>
-    </div>-->
     <div class="col-lg-3 col-md-6">
       <div class="card card-stats">
         <div class="card-body" style="height: 178px;">
@@ -292,10 +214,6 @@ export default {
       winConfirmed2: "",
       countries: [],
       allDate: "",
-      // covid19Start: [],
-      // covid19Confirmed: [],
-      // covid19Recovered: [],
-      // covid19Deaths: []
       provinces: [],
       totalsConfirm: []
     };
@@ -313,9 +231,6 @@ export default {
     covid19StartDate(time) {
       return moment(String(time)).format("DD MMM");
     },
-    // sortAppointments(param) {
-    //   return param.sort((a, b) => a.TotalConfirmed - b.TotalConfirmed);
-    // },
     subStrCountries(country) {
       return country == "United States of America" ? "United States" : country;
     }
@@ -327,7 +242,6 @@ export default {
       .then(response => {
         if (null != response && response.status == 200) {
           // debugger;
-          console.log(response);
           let pro = [];
           let totals = [];
           // console.log(Object.entries(response.data.Province));
@@ -415,18 +329,6 @@ export default {
             }
           });
           this.countries = allContries;
-          //Find top
-          // let countryUs1 = this.subStrCountries(
-          //   sortData[sortData.length - 2].Country
-          // );
-          // let countryUs2 = this.subStrCountries(
-          //   sortData[sortData.length - 1].Country
-          // );
-          // this.winName2 = countryUs2;
-          // this.winConfirmed2 = sortData[sortData.length - 1].TotalConfirmed;
-          // this.winName1 = countryUs1;
-          // this.winConfirmed1 = sortData[sortData.length - 2].TotalConfirmed;
-          // this.allDate = this.thDateTime(response.data.Date);
         }
       })
       .catch(error => {

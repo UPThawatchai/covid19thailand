@@ -15,14 +15,15 @@
     </div>
     <div id="modal">
       <modal name="qrcode">
+        <!-- <vue-qr :bgSrc="src" :logoSrc="src2" text="http://line.me/ti/p/~sinjugu" :size="200"></vue-qr> -->
         <vue-qr
           :bgSrc="src"
           :logoSrc="src2"
           :size="256"
           text="http://line.me/ti/p/~sinjugu"
           colorDark="#3a683f"
-          style="width: fit-content;height: fit-content;"
         ></vue-qr>
+        <!-- <vue-qr text="http://line.me/ti/p/~sinjugu" :callback="test" qid="testid"></vue-qr> -->
       </modal>
     </div>
   </footer>
@@ -33,19 +34,38 @@ import VModal from "vue-js-modal";
 import VueQr from "vue-qr";
 Vue.component("vue-qr", VueQr);
 Vue.use(VModal);
+
 export default {
-  //value: "http://line.me/ti/p/~sinjugu",
   methods: {
     show: function() {
       this.$modal.show("qrcode");
     },
     hide() {
       this.$modal.hide("qrcode");
+    },
+    test(dataUrl, id) {
+      console.log("url, id");
+      console.log(url, id);
+    },
+    toggleBodyClass(className) {
+      const el = document.body;
+      // debugger;
+      el.classList.add(className);
     }
+  },
+  mounted() {
+    this.toggleBodyClass("v--modal");
   }
 };
 </script>
 <style>
+.v--modal {
+  background: none;
+  right: unset;
+  left: auto !important;
+  width: -webkit-fill-available !important;
+  text-align: center;
+}
 </style>
 
 
