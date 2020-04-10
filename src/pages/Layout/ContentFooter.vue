@@ -15,13 +15,7 @@
     </div>
     <div id="modal">
       <modal name="qrcode">
-        <vue-qr
-          :bgSrc="src"
-          :logoSrc="src2"
-          :size="256"
-          text="http://line.me/ti/p/~sinjugu"
-          colorDark="#3a683f"
-        ></vue-qr>
+        <vue-qr :size="256" text="http://line.me/ti/p/~sinjugu"></vue-qr>
       </modal>
     </div>
   </footer>
