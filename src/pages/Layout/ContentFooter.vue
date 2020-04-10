@@ -15,7 +15,6 @@
     </div>
     <div id="modal">
       <modal name="qrcode">
-        <!-- <vue-qr :bgSrc="src" :logoSrc="src2" text="http://line.me/ti/p/~sinjugu" :size="200"></vue-qr> -->
         <vue-qr
           :bgSrc="src"
           :logoSrc="src2"
@@ -23,7 +22,6 @@
           text="http://line.me/ti/p/~sinjugu"
           colorDark="#3a683f"
         ></vue-qr>
-        <!-- <vue-qr text="http://line.me/ti/p/~sinjugu" :callback="test" qid="testid"></vue-qr> -->
       </modal>
     </div>
   </footer>
@@ -43,13 +41,8 @@ export default {
     hide() {
       this.$modal.hide("qrcode");
     },
-    test(dataUrl, id) {
-      console.log("url, id");
-      console.log(url, id);
-    },
     toggleBodyClass(className) {
       const el = document.body;
-      // debugger;
       el.classList.add(className);
     }
   },
