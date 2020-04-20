@@ -47,11 +47,11 @@ export default {
 </script>
 <style>
 .v--modal {
-  background: none;
+  background: none !important;
   right: unset;
   left: auto !important;
   width: -webkit-fill-available !important;
-  text-align: center;
+  text-align: center !important;
 }
 </style>
 

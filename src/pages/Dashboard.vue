@@ -74,7 +74,7 @@
             </div>
             <div class="col-6">
               <div class="numbers">
-                <p class="card-category">ตาย</p>
+                <p class="card-category">เสียชีวิตสะสม</p>
                 <h3 class="card-title">{{ allDeads }}</h3>
               </div>
             </div>
@@ -90,11 +90,7 @@
         <div class="card-footer">
           <hr />
           <div class="stats">
-            <div>
-              <!-- <i class="tim-icons icon-watch-time"></i> -->
-              เวลาโลก : {{ hours }}
-              <!-- อัพเดทเวลา {{ hours }} -->
-            </div>
+            <div>เวลาโลก : {{ hours }}</div>
           </div>
         </div>
       </div>
@@ -116,12 +112,12 @@
             </div>
             <div class="col-2">
               <div class="numbers">
-                <p class="card-category">ตายสะสม</p>
+                <p class="card-category">เสียชีวิต</p>
               </div>
             </div>
             <div class="col-6">
               <div class="numbers" style="text-align: left;margin-left: 30px;">
-                <p class="card-category">รายชื่อประเทศที่ติดเชื้อ</p>
+                <p class="card-category">รายชื่อประเทศที่ติดเชื้อไวรัส</p>
               </div>
             </div>
             <div class="col-12">
