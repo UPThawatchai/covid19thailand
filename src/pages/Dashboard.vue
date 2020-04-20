@@ -10,7 +10,7 @@
                   <label
                     style="font-size:20px;color: #f7f7f7;"
                     class="card-category"
-                  >ไวรัสโคโรน่าสายพันธุ์ใหม่ 2019 (Novel Coronavirus 2019) อัพเดทล่าสุดวันที่ {{ title }}</label>
+                  >ไวรัสโคโรน่าสายพันธุ์ใหม่ 2019 (Novel Coronavirus 2019) อัพเดทล่าสุด วันนี้ {{ title }}</label>
                 </template>
               </div>
             </div>
@@ -36,7 +36,7 @@
             </div>
             <div class="col-6">
               <div class="numbers">
-                <p class="card-category">ตาย</p>
+                <p class="card-category">เสียชีวิต</p>
                 <h3 class="card-title">{{ thDeads }}</h3>
               </div>
             </div>
@@ -74,7 +74,7 @@
             </div>
             <div class="col-6">
               <div class="numbers">
-                <p class="card-category">เสียชีวิตสะสม</p>
+                <p class="card-category">เสียชีวิต</p>
                 <h3 class="card-title">{{ allDeads }}</h3>
               </div>
             </div>
@@ -90,7 +90,7 @@
         <div class="card-footer">
           <hr />
           <div class="stats">
-            <div>เวลาโลก : {{ hours }}</div>
+            <div>เวลาโลก : {{ title }}</div>
           </div>
         </div>
       </div>
@@ -133,6 +133,7 @@
                     >{{ row.TotalRecovered }}</p>
                   </td>
                   <td class="text-center">
+                    <!-- <li v-for="n in evenNumbers">{{ n }}</li> -->
                     <p
                       style="font-size:1.0625rem;width: 135px;"
                       class="card-title"
@@ -162,7 +163,6 @@
             <div>
               <!-- <i class="tim-icons icon-watch-time"></i> -->
               เวลาโลก : {{ hours }}
-              <!-- อัพเดทเวลา {{ hours }} -->
             </div>
           </div>
         </div>
@@ -211,7 +211,8 @@ export default {
       countries: [],
       allDate: "",
       provinces: [],
-      totalsConfirm: []
+      totalsConfirm: [],
+      sortTotal: []
     };
   },
   methods: {
@@ -219,16 +220,19 @@ export default {
       return moment(String(title)).format("DD/MMM/YYYY HH:mm:ss");
     },
     timeHours(time) {
-      return moment(String(time)).format("DD MM HH:mm");
+      return moment(String(time)).format("DD/MM/HH:mm");
     },
-    thDateTime(time) {
-      return moment(String(time)).format("DD MMM HH:mm");
-    },
-    covid19StartDate(time) {
-      return moment(String(time)).format("DD MMM");
-    },
+    // thDateTime(time) {
+    //   debugger;
+    //   return moment(String(time)).format("DD MMM HH:mm");
+    // },
+    // covid19StartDate(time) {
+    //   return moment(String(time)).format("DD MMM");
+    // },
     subStrCountries(country) {
-      return country == "United States of America" ? "United States" : country;
+      return country.sort((a, b) =>
+        a.TotalConfirmed < b.TotalConfirmed ? 1 : -1
+      );
     }
   },
   mounted() {
@@ -237,10 +241,8 @@ export default {
       .get("https://covid19.th-stat.com/api/open/cases/sum")
       .then(response => {
         if (null != response && response.status == 200) {
-          // debugger;
           let pro = [];
           let totals = [];
-          // console.log(Object.entries(response.data.Province));
           Object.entries(response.data.Province).forEach(map => {
             pro.push(map[0]);
             totals.push(map[1]);
@@ -279,9 +281,9 @@ export default {
       )
       .then(response => {
         if (null != response && response.status == 200) {
+          debugger;
           this.title = this.titleChart(response.data.statistic_taken_at);
           this.allData = response.data.total_cases;
-          this.hours = this.thDateTime(response.data.statistic_taken_at);
           this.allRecovery = response.data.total_recovered;
           this.allDeads = response.data.total_deaths;
         }
@@ -300,7 +302,7 @@ export default {
           this.thAll = response.data.Confirmed;
           this.thDeads = response.data.Deaths;
           this.thRecovery = response.data.Recovered;
-          this.thDate = this.thDateTime(response.data.UpdateDate);
+          this.thDate = response.data.UpdateDate;
         }
       })
       .catch(error => {
@@ -324,7 +326,8 @@ export default {
               allContries.push(element);
             }
           });
-          this.countries = allContries;
+          this.countries = this.subStrCountries(allContries);
+          this.hours = this.timeHours(response.data.Date);
         }
       })
       .catch(error => {
