@@ -10,7 +10,7 @@
                   <label
                     style="font-size:20px;color: #f7f7f7;"
                     class="card-category"
-                  >ไวรัสโคโรน่าสายพันธุ์ใหม่ 2019 (Novel Coronavirus 2019) อัพเดทล่าสุด วันนี้ {{ title }}</label>
+                  >ไวรัสโคโรน่าสายพันธุ์ใหม่ 2019 (Novel Coronavirus 2019) อัพเดทล่าสุด {{ title }}</label>
                 </template>
               </div>
             </div>
@@ -31,19 +31,19 @@
             <div class="col-7" id="istemp">
               <div class="numbers" id="istesmp">
                 <p class="card-category">ติดเชื้อไวรัสในไทย</p>
-                <h3 class="card-title">{{ thAll }}</h3>
+                <h3 class="card-title">{{ Number(thAll).toLocaleString() }}</h3>
               </div>
             </div>
             <div class="col-6">
               <div class="numbers">
                 <p class="card-category">เสียชีวิต</p>
-                <h3 class="card-title">{{ thDeads }}</h3>
+                <h3 class="card-title">{{ Number(thDeads).toLocaleString() }}</h3>
               </div>
             </div>
             <div class="col-6">
               <div class="numbers">
                 <p class="card-category">รักษาหาย</p>
-                <h3 class="card-title">{{ thRecovery }}</h3>
+                <h3 class="card-title">{{ Number(thRecovery).toLocaleString() }}</h3>
               </div>
             </div>
           </div>
@@ -69,19 +69,19 @@
             <div class="col-7">
               <div class="numbers">
                 <p class="card-category">ผู้ติดเชื้อไวรัสทั่วโลก</p>
-                <h3 class="card-title">{{ allData }}</h3>
+                <h3 class="card-title">{{ Number(allData).toLocaleString() }}</h3>
               </div>
             </div>
             <div class="col-6">
               <div class="numbers">
                 <p class="card-category">เสียชีวิต</p>
-                <h3 class="card-title">{{ allDeads }}</h3>
+                <h3 class="card-title">{{ Number(allDeads).toLocaleString() }}</h3>
               </div>
             </div>
             <div class="col-6">
               <div class="numbers">
                 <p class="card-category">รักษาหาย</p>
-                <h3 class="card-title">{{ allRecovery }}</h3>
+                <h3 class="card-title">{{ Number(allRecovery).toLocaleString() }}</h3>
               </div>
             </div>
           </div>
@@ -130,20 +130,19 @@
                     <p
                       style="font-size: 1.0625rem;width: 85px;"
                       class="text-muted"
-                    >{{ row.TotalRecovered }}</p>
+                    >{{ Number(row.TotalRecovered).toLocaleString() }}</p>
                   </td>
                   <td class="text-center">
-                    <!-- <li v-for="n in evenNumbers">{{ n }}</li> -->
                     <p
                       style="font-size:1.0625rem;width: 135px;"
                       class="card-title"
-                    >{{ row.TotalConfirmed }}</p>
+                    >{{ Number(row.TotalConfirmed).toLocaleString() }}</p>
                   </td>
                   <td class="text-center">
                     <p
                       style="font-size:1.0625rem;width: 90px;"
                       class="card-title"
-                    >{{ row.TotalDeaths }}</p>
+                    >{{ Number(row.TotalDeaths).toLocaleString() }}</p>
                   </td>
                   <td class="text-left">
                     <p
@@ -217,13 +216,12 @@ export default {
   },
   methods: {
     titleChart(title) {
-      return moment(String(title)).format("DD/MMM/YYYY HH:mm:ss");
+      return moment(String(title)).format("DD/MM/YYYY HH:mm:ss");
     },
     timeHours(time) {
       return moment(String(time)).format("DD/MM/HH:mm");
     },
     // thDateTime(time) {
-    //   debugger;
     //   return moment(String(time)).format("DD MMM HH:mm");
     // },
     // covid19StartDate(time) {
@@ -269,23 +267,24 @@ export default {
     //GET TOTAL START===============
     var config = {
       headers: {
-        "x-rapidapi-host": "coronavirus-monitor.p.rapidapi.com",
-        "x-rapidapi-key": "5156f83861mshd5c5731412d4c5fp18132ejsn8ae65e661a54",
-        crossDomain: true
+        // "x-rapidapi-host": "coronavirus-monitor.p.rapidapi.com",
+        // "x-rapidapi-key": "5156f83861mshd5c5731412d4c5fp18132ejsn8ae65e661a54",
+        // crossDomain: true
       }
     };
     axios
       .get(
-        "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php",
+        // "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php",
+        "https://corona.lmao.ninja/v2/all",
         config
       )
       .then(response => {
         if (null != response && response.status == 200) {
-          debugger;
-          this.title = this.titleChart(response.data.statistic_taken_at);
-          this.allData = response.data.total_cases;
-          this.allRecovery = response.data.total_recovered;
-          this.allDeads = response.data.total_deaths;
+          var date = new Date(response.data.updated).toLocaleString();
+          this.title = this.titleChart(date);
+          this.allData = response.data.cases;
+          this.allRecovery = response.data.recovered;
+          this.allDeads = response.data.deaths;
         }
       })
       .catch(error => {
